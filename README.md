@@ -1,6 +1,6 @@
 <div align="center">
 
-# KIMI CODE CLI CHEAT SHEET (BETA)
+# Kimi Cheat Sheet (Beta)
 
 <img width="1897" height="1317" alt="image" src="https://github.com/user-attachments/assets/fc0b10df-8bc9-4db5-9ea7-9ea446ac679b" />
 
