@@ -1,8 +1,20 @@
 <div align="center">
 
-# Kimi Cheat Sheet (Beta)
-
-<img alt="Kimi Code CLI" src="https://via.placeholder.com/1200x400/1e3a8a/ffffff?text=Kimi+Code+CLI+Cheat+Sheet" />
+<pre style="background: #1e3a8a; color: white; padding: 20px; border-radius: 8px;">
+╔══════════════════════════════════════════════════════════════════╗
+║                                                                  ║
+║   ██╗  ██╗██╗███╗   ███╗██╗      ██████╗██╗      ██████╗         ║
+║   ██║ ██╔╝██║████╗ ████║██║     ██╔════╝██║     ██╔════╝         ║
+║   █████╔╝ ██║██╔████╔██║██║     ██║     ██║     ██║  ███╗        ║
+║   ██╔═██╗ ██║██║╚██╔╝██║██║     ██║     ██║     ██║   ██║        ║
+║   ██║  ██╗██║██║ ╚═╝ ██║███████╗╚██████╗███████╗╚██████╔╝        ║
+║   ╚═╝  ╚═╝╚═╝╚═╝     ╚═╝╚══════╝ ╚═════╝╚══════╝ ╚═════╝         ║
+║                                                                  ║
+║              C O D E   C L I   C H E A T   S H E E T             ║
+║                         ( B E T A )                              ║
+║                                                                  ║
+╚══════════════════════════════════════════════════════════════════╝
+</pre>
 
 > **Your practical guide to using Kimi Code CLI effectively — from first steps to advanced workflows.**
 
