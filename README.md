@@ -2,7 +2,7 @@
 
 # KIMI CODE CLI CHEAT SHEET (BETA)
 
-<img width="1897" height="635" alt="image" src="https://github.com/user-attachments/assets/fc0b10df-8bc9-4db5-9ea7-9ea446ac679b" />
+<img width="1897" height="1317" alt="image" src="https://github.com/user-attachments/assets/fc0b10df-8bc9-4db5-9ea7-9ea446ac679b" />
 
 > **Your practical guide to using Kimi Code CLI effectively — from first steps to advanced workflows.**
 
