@@ -2,7 +2,7 @@
 
 # Kimi Cheat Sheet
 
-<img width="3840" height="1317" alt="Kimi Code CLI" src="https://github.com/user-attachments/assets/kimi-header-placeholder.png" />
+<img width="3840" height="600" alt="Kimi Code CLI" src="https://github.com/user-attachments/assets/kimi-cli-header.png" />
 
 > **Your practical guide to using Kimi Code CLI effectively — from first steps to advanced workflows.**
 
