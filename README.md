@@ -2,6 +2,8 @@
 
 # KIMI CODE CLI CHEAT SHEET (BETA)
 
+<img width="626" height="322" alt="image" src="https://github.com/user-attachments/assets/7bb43810-7bfb-44e1-8a1b-18aea61d4504" />
+
 > **Your practical guide to using Kimi Code CLI effectively — from first steps to advanced workflows.**
 
 A reference for developers who want to leverage Kimi's agentic capabilities while staying in control. Focuses on patterns that augment your thinking, not replace it.
