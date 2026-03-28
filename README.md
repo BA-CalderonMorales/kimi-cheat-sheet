@@ -1,8 +1,8 @@
 <div align="center">
 
-# Kimi Cheat Sheet
+# Kimi Cheat Sheet (Beta)
 
-<img width="3840" height="600" alt="Kimi Code CLI" src="https://github.com/user-attachments/assets/kimi-cli-header.png" />
+<img alt="Kimi Code CLI" src="https://via.placeholder.com/1200x400/1e3a8a/ffffff?text=Kimi+Code+CLI+Cheat+Sheet" />
 
 > **Your practical guide to using Kimi Code CLI effectively — from first steps to advanced workflows.**
 
