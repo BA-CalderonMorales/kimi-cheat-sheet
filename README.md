@@ -496,6 +496,9 @@ Kimi is an assistant, not a replacement for your judgment:
 - [Official Documentation](https://moonshotai.github.io/kimi-cli/) — Complete documentation
 - [LLM-Friendly Version](https://moonshotai.github.io/kimi-cli/llms.txt) — Structured for AI consumption
 
+**Related Tools:**
+- [Codex Cheat Sheet](https://github.com/BA-CalderonMorales/codex-cheat-sheet) — Companion guide for OpenAI Codex CLI
+
 **Community:**
 - GitHub Issues — Bug reports and feature requests
 - Discussions — Community Q&A and workflows
