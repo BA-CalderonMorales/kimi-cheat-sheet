@@ -13,6 +13,13 @@ A practical reference guide for Kimi Code CLI users. Emphasizes critical thinkin
 3. **Stay Current** — Kimi CLI updates frequently; verify against latest documentation
 4. **No Hype** — Focus on practical utility, not marketing language
 
+## Working Rules
+
+- If a prompt would require a major architectural deviation, stop and explain before proceeding.
+- Keep changes and milestones separated into distinct commits.
+- After each change or milestone, commit and push before starting the next one.
+- Do not bundle unrelated work from different prompts into the same commit.
+
 ## Structure
 
 - **Level 1-5**: Progressive learning path
