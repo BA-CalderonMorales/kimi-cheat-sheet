@@ -12,3 +12,4 @@ permissions:
 jobs:
   security:
     uses: BA-CalderonMorales/.github/.github/workflows/security-scan.yml@2ac88022e38caaaff37f13c2ffbbc62720c9e280
+    secrets: inherit
