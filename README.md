@@ -185,6 +185,71 @@ kimi -p "Explain the architecture of this project"
 
 </details>
 
+<details>
+<summary><strong>Interactive Slash Commands</strong></summary>
+
+Use these inside an active Kimi session (type `/` to see the popup).
+
+**Session control:**
+```bash
+/new                      # Create a new session
+/sessions                 # List and switch sessions (alias: /resume)
+/title <text>             # View or set session title (alias: /rename)
+/undo                     # Roll back to a previous turn and retry
+/fork                     # Fork the current session
+/clear                    # Clear context and start fresh (alias: /reset)
+/compact                  # Manually compact context to reduce tokens
+/export                   # Export session to a Markdown file
+/import <path|session>    # Import context from a file or session
+```
+
+**Configuration:**
+```bash
+/model                    # Switch model and thinking mode
+/login                    # Log in or configure platform (alias: /setup)
+/logout                   # Sign out
+/reload                   # Reload config without exiting
+/editor                   # Set external editor (Ctrl-O to open)
+/theme dark|light         # Switch terminal color theme
+```
+
+**Approval modes:**
+```bash
+/yolo                     # Toggle auto-approve all actions
+/afk                      # Toggle AFK mode (auto-approves + auto-dismisses questions)
+/plan                     # Toggle plan mode (read-only exploration)
+```
+
+**Skills and workspace:**
+```bash
+/skill:<name>             # Load a specific skill
+/flow:<name>              # Execute a flow skill
+/add-dir <path>           # Add directory to workspace scope
+/init                     # Analyze project and generate AGENTS.md
+```
+
+**Debugging and info:**
+```bash
+/debug                    # Show messages, tokens, checkpoints, history
+/usage                    # Show API usage and quota (alias: /status)
+/mcp                      # Show connected MCP servers and tools
+/hooks                    # Show configured hooks
+/task                     # Open background task browser
+/web                      # Switch to Web UI
+/vis                      # Switch to Agent Tracing Visualizer
+```
+
+**Utility:**
+```bash
+/btw <question>           # Ask a side question without interrupting main chat
+/help                     # Show help (aliases: /h, /?)
+/version                  # Show version
+/changelog                # Show recent changelog (alias: /release-notes)
+/feedback                 # Submit feedback
+```
+
+</details>
+
 ## Level 3: Intermediate Usage
 
 Configuration and customization options.
@@ -518,8 +583,8 @@ MIT License — Free to use and modify.
 
 ---
 
-**Last updated: March 2026**  
+**Last updated: May 2026**  
 **Based on**: Kimi Code CLI (pip: kimi-cli)
 
 ---
-*Last synced: 2026-03-30 via [workspace manager](https://github.com/BA-CalderonMorales)*
+*Last synced: 2026-05-14 via [workspace manager](https://github.com/BA-CalderonMorales)*
