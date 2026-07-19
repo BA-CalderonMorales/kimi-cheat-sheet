@@ -1,12 +1,14 @@
 <div align="center">
 
-# Kimi Cheat Sheet (Beta)
+# Kimi Cheat Sheet
 
-<img width="1897" height="500" alt="image" src="https://github.com/user-attachments/assets/fc0b10df-8bc9-4db5-9ea7-9ea446ac679b" />
+<a href="https://www.kimi.com/"><img width="1040" height="476" alt="Kimi cheat sheet" src="assets/image.png" /></a>
 
 > **Your practical guide to using Kimi Code CLI effectively — from first steps to advanced workflows.**
 
 A reference for developers who want to leverage Kimi's agentic capabilities while staying in control. Focuses on patterns that augment your thinking, not replace it.
+
+> **Note:** Kimi CLI is evolving into [Kimi Code](https://github.com/MoonshotAI/kimi-code) — the next-generation terminal AI agent from the same team. Installing Kimi Code automatically migrates your configuration and sessions. This project remains available; see the [official docs](https://moonshotai.github.io/kimi-cli/en/) for the latest.
 
 **Based on official Kimi CLI documentation** — Commands verified against the [official Kimi repository](https://github.com/MoonshotAI/kimi-cli). For the latest updates, refer to the official docs.
 
@@ -246,6 +248,7 @@ Use these inside an active Kimi session (type `/` to see the popup).
 /version                  # Show version
 /changelog                # Show recent changelog (alias: /release-notes)
 /feedback                 # Submit feedback
+/upgrade                  # Install Kimi Code (automatic migration)
 ```
 
 </details>
@@ -341,18 +344,45 @@ Powerful features for complex workflows.
 ```bash
 # MCP (Model Context Protocol) extends Kimi with external tools
 
-# Configure MCP servers in ~/.kimi/config.toml
-# Or pass config files:
-kimi --mcp-config-file /path/to/mcp.toml
+# Add streamable HTTP server
+kimi mcp add --transport http context7 https://mcp.context7.com/mcp --header "CONTEXT7_API_KEY: your-key"
 
-# Manage MCP configurations
+# Add stdio server
+kimi mcp add --transport stdio chrome-devtools -- npx chrome-devtools-mcp@latest
+
+# List configured servers
 kimi mcp list
-kimi mcp add <name> -- <command>
+
+# Remove a server
+kimi mcp remove chrome-devtools
+
+# Authorize an MCP server (OAuth)
+kimi mcp auth linear
 
 # MCP enables:
 # - Database connections
 # - API integrations
 # - Custom tools
+```
+
+Ad-hoc MCP config file format:
+
+```toml
+[mcp.servers.context7]
+transport = "http"
+url = "https://mcp.context7.com/mcp"
+headers = { CONTEXT7_API_KEY = "your-key" }
+
+[mcp.servers.chrome-devtools]
+transport = "stdio"
+command = "npx"
+args = ["chrome-devtools-mcp@latest"]
+```
+
+Or pass via `--mcp-config-file`:
+
+```bash
+kimi --mcp-config-file /path/to/mcp.toml
 ```
 
 </details>
@@ -408,6 +438,71 @@ kimi --print --output-format json "analyze this"
 # Useful for long-running operations
 ```
 
+</details>
+
+<details>
+<summary><strong>Shell Command Mode</strong></summary>
+
+Kimi CLI doubles as a shell. Press Ctrl+X to toggle shell command mode, letting you run shell commands directly without leaving Kimi.
+
+```bash
+# In interactive mode, press Ctrl+X to switch to shell mode
+# Run any shell command natively
+ls -la
+git status
+npm test
+
+# Press Ctrl+X again to return to agent mode
+```
+
+Built-in shell commands like `cd` are handled by the agent, not the shell.
+</details>
+
+<details>
+<summary><strong>IDE Integration (ACP)</strong></summary>
+
+Kimi CLI supports Agent Client Protocol (ACP) for IDE integration:
+
+```bash
+# Start as ACP server
+kimi acp
+
+# Configure in Zed (~/.config/zed/settings.json):
+# {
+#   "agent_servers": {
+#     "Kimi CLI": {
+#       "type": "custom",
+#       "command": "kimi",
+#       "args": ["acp"],
+#       "env": {}
+#     }
+#   }
+# }
+
+# VS Code extension available via:
+# Kimi Code VS Code Extension in marketplace
+```
+
+See [IDE Integration Docs](https://moonshotai.github.io/kimi-cli/en/guides/ides.html) for details.
+</details>
+
+<details>
+<summary><strong>Zsh Integration</strong></summary>
+
+Use Kimi CLI with Zsh for AI-powered shell:
+
+```bash
+# Install zsh-kimi-cli plugin
+git clone https://github.com/MoonshotAI/zsh-kimi-cli.git \
+  ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/kimi-cli
+
+# Add to ~/.zshrc plugins:
+plugins=(... kimi-cli)
+
+# Press Ctrl+X to switch to agent mode
+```
+
+See [Zsh Integration Guide](https://github.com/MoonshotAI/zsh-kimi-cli) for details.
 </details>
 
 ## Level 5: Expert Workflows
@@ -558,8 +653,9 @@ Kimi is an assistant, not a replacement for your judgment:
 
 **Official Kimi Documentation:**
 - [Kimi CLI Repository](https://github.com/MoonshotAI/kimi-cli) — Main repository and documentation
-- [Official Documentation](https://moonshotai.github.io/kimi-cli/) — Complete documentation
-- [LLM-Friendly Version](https://moonshotai.github.io/kimi-cli/llms.txt) — Structured for AI consumption
+- [Kimi Code Repository](https://github.com/MoonshotAI/kimi-code) — Next-generation terminal AI agent
+- [Official Documentation](https://moonshotai.github.io/kimi-cli/en/) — Complete documentation
+- [LLM-Friendly Version](https://moonshotai.github.io/kimi-cli/en/llms.txt) — Structured for AI consumption
 
 **Related Tools:**
 - [Codex Cheat Sheet](https://github.com/BA-CalderonMorales/codex-cheat-sheet) — Companion guide for OpenAI Codex CLI
@@ -583,8 +679,8 @@ MIT License — Free to use and modify.
 
 ---
 
-**Last updated: May 2026**  
+**Last updated: July 2026**  
 **Based on**: Kimi Code CLI (pip: kimi-cli)
 
 ---
-*Last synced: 2026-05-14 via [workspace manager](https://github.com/BA-CalderonMorales)*
+*Last synced: 2026-07-19 via [workspace manager](https://github.com/BA-CalderonMorales)*
