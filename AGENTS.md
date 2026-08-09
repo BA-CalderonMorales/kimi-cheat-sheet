@@ -1,44 +1,67 @@
 # AGENTS.md - Kimi Cheat Sheet
 
-## Quick Reference
+## Current Shape
 
-- **Purpose**: Reference guide for Kimi Code CLI
-- **Official Docs**: https://moonshotai.github.io/kimi-cli/
-- **Verify**: `kimi --help` before documenting
+- The product is the README single page: progressive levels (Level 1 ->
+  Level 5), quick-reference tables, and `<details>` sections for scannable
+  command lookups.
+- `skills/<name>/` holds on-disk reusable capabilities as `SKILL.md` files
+  (mcp-setup, session-management, thinking-mode).
+- `assets/` holds the sheet imagery; `.github/workflows/security-scan.yml`
+  is the CI gate (shared org-level scan, Trivy by default).
+- Community surface: `CONTRIBUTING.md`, `CODE_OF_CONDUCT.md`, `LICENSE`.
+- Kimi CLI is evolving into Kimi Code; sheet content tracks the official
+  docs and calls out the migration path where relevant.
+- Pre-rewrite leftovers are pruned; use Git history for legacy reference.
 
-## Key Principles
+## Key Sections
 
-1. **Accuracy First** - Verify all commands against official Kimi CLI
-2. **Think Critically** - Help users understand WHEN, not just HOW
-3. **Stay Current** - Kimi CLI updates frequently
-4. **No Hype** - Focus on practical utility
+| To understand... | Read |
+|---|---|
+| The sheet: levels, commands, examples | `README.md` |
+| On-disk skills and how to invoke them | `skills/` |
+| Contribution flow and standards | `CONTRIBUTING.md` |
+| Official Kimi truth | [moonshotai.github.io/kimi-cli](https://moonshotai.github.io/kimi-cli/) |
+| Security gate behavior | `.github/workflows/security-scan.yml` |
 
-## Structure
+Lost in the woods? Start with `README.md` for *what the sheet covers*, then
+`CONTRIBUTING.md` for *how changes land*.
 
-- **Level 1-5**: Progressive learning path
-- **Command Reference**: Quick lookup table
-- **Best Practices**: Guidelines for effective use
+## Branch Strategy
 
-## When Making Changes
+- `develop` is the default base for PRs and the integration branch.
+- Every change traces: topic branch off `develop`, merge into `develop`,
+  then merge `develop` into `main`.
+- Never open a PR directly from a topic branch to `main`. This keeps
+  `develop` as the integration branch and makes contribution easy to follow.
 
-- Verify commands with `kimi --help`
-- Check official docs: https://moonshotai.github.io/kimi-cli/
-- Maintain consistent formatting with collapsible sections
-- Update "Last updated" date in README
+## CI
 
-## Target Audience
+- Security scan runs on pushes and PRs against `main` and `develop`
+  (org-level reusable workflow); gate failures block merges.
 
-Developers who:
-- Want to leverage AI assistance effectively
-- Value understanding over memorization
-- Need practical patterns for real work
+## Rules
 
-## Working Rules
+- Accuracy first: verify commands with `kimi --help` and the official Kimi
+  docs (moonshotai.github.io/kimi-cli) before documenting; update the
+  "Last updated" date in the README.
+- Think critically - cover WHEN, not just HOW; no hype, only practical
+  utility.
+- Maintain consistent formatting with collapsible sections; minimal emojis,
+  used for structure, not decoration.
+- One change per commit; stop and explain before major restructuring; do not
+  bundle unrelated work into the same commit.
 
-- Stop and explain before major architectural changes
-- One change per commit, commit before starting next
-- Do not bundle unrelated work into the same commit
-- **Branch flow (canonical):** All changes go through `develop`. Branch a topic branch off `develop`, make the change, merge the topic branch into `develop`, then merge `develop` into `main`. Never open a PR directly from a topic branch to `main`. This keeps `develop` as the integration branch and makes contribution easy to demonstrate and follow.
+## Design Principles
+
+- **POLA** - behavior must not astonish: verified flags, current commands,
+  no invented workflows.
+- **DRY** - the README is the single source of truth; for depth, link to
+  official docs instead of restating them.
+- **KISS** - a scannable reference beats exhaustive prose; when in doubt,
+  delete a section before adding one.
+- **DIP** - depend on the official documentation contract, never on
+  hearsay; this sheet is a guide to sources, not a replacement for them.
 
 <!-- gitnexus:start -->
 # GitNexus — Code Intelligence
