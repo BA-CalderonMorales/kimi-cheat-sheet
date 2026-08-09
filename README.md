@@ -20,8 +20,8 @@ A reference for developers who want to leverage Kimi's agentic capabilities whil
 # Install with pip
 pip install kimi-cli
 
-# Or with uv (recommended)
-uv pip install kimi-cli
+# Or with pipx (recommended)
+pipx install kimi-cli
 
 # Launch Kimi
 kimi
@@ -51,8 +51,8 @@ Essential commands to start using Kimi effectively.
 # Install with pip
 pip install kimi-cli
 
-# Or with uv
-uv pip install kimi-cli
+# Or with pipx
+pipx install kimi-cli
 
 # Verify installation
 kimi --version
@@ -679,8 +679,8 @@ MIT License — Free to use and modify.
 
 ---
 
-**Last updated: July 2026**  
+**Last updated: August 2026 — Updated on 2026-08-09**  
 **Based on**: Kimi Code CLI (pip: kimi-cli)
 
 ---
-*Last synced: 2026-07-19 via [workspace manager](https://github.com/BA-CalderonMorales)*
+*Last synced: 2026-08-09 via [workspace manager](https://github.com/BA-CalderonMorales)*
