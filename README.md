@@ -365,30 +365,42 @@ kimi mcp remove chrome-devtools
 # Authorize an MCP server (OAuth)
 kimi mcp auth linear
 
+# Test a server connection and list its tools
+kimi mcp test context7
+
+# Clear a cached OAuth token (re-auth with kimi mcp auth <name>)
+kimi mcp reset-auth linear
+
 # MCP enables:
 # - Database connections
 # - API integrations
 # - Custom tools
 ```
 
-Ad-hoc MCP config file format:
+MCP server config lives in `~/.kimi/mcp.json` (`mcpServers` format, compatible with other MCP clients):
 
-```toml
-[mcp.servers.context7]
-transport = "http"
-url = "https://mcp.context7.com/mcp"
-headers = { CONTEXT7_API_KEY = "your-key" }
-
-[mcp.servers.chrome-devtools]
-transport = "stdio"
-command = "npx"
-args = ["chrome-devtools-mcp@latest"]
+```json
+{
+  "mcpServers": {
+    "context7": {
+      "url": "https://mcp.context7.com/mcp",
+      "headers": {
+        "CONTEXT7_API_KEY": "your-key"
+      }
+    },
+    "chrome-devtools": {
+      "command": "npx",
+      "args": ["chrome-devtools-mcp@latest"]
+    }
+  }
+}
 ```
 
-Or pass via `--mcp-config-file`:
+Or load from another file / pass JSON directly:
 
 ```bash
-kimi --mcp-config-file /path/to/mcp.toml
+kimi --mcp-config-file /path/to/mcp.json
+kimi --mcp-config '{"mcpServers": {"test": {"url": "https://..."}}}'
 ```
 
 </details>
