@@ -17,11 +17,14 @@ A reference for developers who want to leverage Kimi's agentic capabilities whil
 ## Quick Start
 
 ```bash
-# Install with pip
-pip install kimi-cli
+# Install with the official script (installs uv first)
+curl -LsSf https://code.kimi.com/install.sh | bash
 
-# Or with uv (recommended)
-uv pip install kimi-cli
+# Or via uv (Python 3.12-3.14 supported, 3.13 recommended)
+uv tool install --python 3.13 kimi-cli
+
+# Upgrade
+uv tool upgrade kimi-cli --no-cache
 
 # Launch Kimi
 kimi
@@ -48,11 +51,11 @@ Essential commands to start using Kimi effectively.
 <summary><strong>Installation & Setup</strong></summary>
 
 ```bash
-# Install with pip
-pip install kimi-cli
+# Install with the official script (installs uv first)
+curl -LsSf https://code.kimi.com/install.sh | bash
 
-# Or with uv
-uv pip install kimi-cli
+# Or via uv
+uv tool install --python 3.13 kimi-cli
 
 # Verify installation
 kimi --version
