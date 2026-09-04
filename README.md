@@ -89,6 +89,8 @@ kimi --continue
 kimi --session <SESSION_ID>
 ```
 
+> **Login:** On first launch, run `/login` inside the session — pick **Kimi Code** for browser OAuth, or another platform and enter an API key. `/login` (and `/model`) require the default config file; they are unavailable when `--config` or `--config-file` is used.
+
 </details>
 
 <details>
@@ -276,20 +278,26 @@ Configuration and customization options.
 <summary><strong>Configuration</strong></summary>
 
 ```bash
-# Config file location: ~/.kimi/config.toml
+# Config file location: ~/.kimi/config.toml (TOML or JSON)
 
 # Common settings:
 # - default_model
 # - default_thinking
 # - default_yolo
-# - max_steps_per_turn
-# - mcp client settings
+# - default_plan_mode
+# - theme (dark/light)
+# - default_editor
+# - skip_afk_prompt_injection
+# - show_thinking_stream
+# - merge_all_available_skills (default true)
+# - telemetry (default true)
+# - loop_control.max_steps_per_turn (default 1000)
 
-# Use custom config file
-kimi --config-file /path/to/custom.toml
+# Use custom config file (TOML or JSON)
+kimi --config-file /path/to/config.toml
 
-# Inline config override
-kimi --config 'default_thinking = false'
+# Inline config override (TOML or JSON)
+kimi --config '{"default_thinking": false}'
 ```
 
 </details>
@@ -298,11 +306,11 @@ kimi --config 'default_thinking = false'
 <summary><strong>Model Selection</strong></summary>
 
 ```bash
-# Use specific model
+# Use specific model (kimi-for-coding is the default model)
 kimi -m kimi-for-coding
 
-# List available models
-# (Configured in ~/.kimi/config.toml)
+# List and switch models interactively
+# Run /model inside a session (refreshes the model list)
 
 # Model capabilities vary — check kimi info for details
 ```
@@ -419,9 +427,16 @@ kimi --mcp-config '{"mcpServers": {"test": {"url": "https://..."}}}'
 
 ```bash
 # Skills are reusable capabilities
-# Location: ~/.kimi/skills/**/SKILL.md
+# User-level: ~/.kimi/skills/**/SKILL.md
+# (also ~/.claude/skills/, ~/.codex/skills/ — merged by default)
+# Project-level: .kimi/skills/, .claude/skills/, .codex/skills/ (repo root)
+# Discovery priority: Project > User > Extra > Built-in
+# Single-file <name>.md skills are also supported
 
-# Add custom skills directories
+# Add extra skills directories (additive, via config)
+# extra_skill_dirs = ["~/my-skills-collection"]
+
+# Override auto-discovery with your own directories (repeatable)
 kimi --skills-dir /path/to/custom/skills
 
 # Skill format (YAML frontmatter + body):
