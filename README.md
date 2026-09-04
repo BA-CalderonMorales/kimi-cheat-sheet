@@ -135,10 +135,13 @@ kimi --no-thinking
 # Interactive mode (default) — approve each action
 kimi
 
-# YOLO mode — auto-approve all actions (use with caution)
+# YOLO mode — auto-approve all actions, user still reachable
 kimi --yolo
 
-# Print mode — non-interactive, implies --yolo
+# AFK mode — auto-approve all actions and auto-dismiss questions
+kimi --afk
+
+# Print mode — non-interactive, implicitly enables --afk
 kimi --print "your prompt"
 
 # Quiet mode — minimal output
@@ -147,8 +150,9 @@ kimi --quiet "your prompt"
 
 **When to use each:**
 - **Interactive**: Default for most work — stay in control
-- **YOLO**: Trusted, repetitive tasks in known codebases
-- **Print**: CI/CD, automation, scripting
+- **YOLO**: Trusted, repetitive tasks in known codebases — user still reachable
+- **AFK** (`--afk` or `/afk`): Unattended runs — auto-approves and auto-dismisses questions
+- **Print**: CI/CD, automation, scripting (implicitly enables `--afk`)
 - **Quiet**: Piping output to other tools
 
 </details>
