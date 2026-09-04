@@ -96,10 +96,19 @@ kimi --session <SESSION_ID>
 
 ```bash
 # Keyboard shortcuts in interactive mode
-Ctrl+C                    # Cancel current operation
+Ctrl+C                    # Interrupt current operation / clear input
 Ctrl+D                    # Exit Kimi
-Tab                       # Auto-complete
-↑/↓                       # Command history
+Ctrl-X                    # Toggle agent/shell mode
+Shift-Tab                 # Toggle plan mode
+Ctrl-O                    # Edit in external editor
+Ctrl-J / Alt-Enter        # Insert newline
+Ctrl-S                    # Steer: inject input into the running turn
+Ctrl-V                    # Paste (text, images, video)
+Ctrl-E                    # Expand full approval request content
+↑/↓                       # History / question navigation
+
+# Completion menu: type / for slash commands, @ for file paths
+# (arrow keys + Enter to select)
 
 # Working directory options
 kimi -w /path/to/project                    # Set working directory
