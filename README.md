@@ -8,7 +8,7 @@
 
 A reference for developers who want to leverage Kimi's agentic capabilities while staying in control. Focuses on patterns that augment your thinking, not replace it.
 
-> **Note:** Kimi CLI is evolving into [Kimi Code](https://github.com/MoonshotAI/kimi-code) — the next-generation terminal AI agent from the same team. Installing Kimi Code automatically migrates your configuration and sessions. This project remains available; see the [official docs](https://moonshotai.github.io/kimi-cli/en/) for the latest.
+> **Note:** Kimi CLI is evolving into [Kimi Code](https://github.com/MoonshotAI/kimi-code) — the next-generation terminal AI agent from the same team. This project is being gradually wound down; the docs and existing installations remain available. Run `/upgrade` inside a session (or install via [kimi.com/code](https://kimi.com/code)) for a one-key migration — configuration and sessions are migrated automatically. See the [official docs](https://moonshotai.github.io/kimi-cli/en/) for the latest.
 
 **Based on official Kimi CLI documentation** — Commands verified against the [official Kimi repository](https://github.com/MoonshotAI/kimi-cli). For the latest updates, refer to the official docs.
 
@@ -711,7 +711,7 @@ Kimi is an assistant, not a replacement for your judgment:
 - [Kimi CLI Repository](https://github.com/MoonshotAI/kimi-cli) — Main repository and documentation
 - [Kimi Code Repository](https://github.com/MoonshotAI/kimi-code) — Next-generation terminal AI agent
 - [Official Documentation](https://moonshotai.github.io/kimi-cli/en/) — Complete documentation
-- [LLM-Friendly Version](https://moonshotai.github.io/kimi-cli/en/llms.txt) — Structured for AI consumption
+- [LLM-Friendly Version](https://moonshotai.github.io/kimi-cli/en.md) — Per-page Markdown for AI consumption (append `.md` to any docs page)
 
 **Related Tools:**
 - [Codex Cheat Sheet](https://github.com/BA-CalderonMorales/codex-cheat-sheet) — Companion guide for OpenAI Codex CLI
