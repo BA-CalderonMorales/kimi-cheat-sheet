@@ -21,9 +21,13 @@ kimi --session <SESSION_ID>
 
 ## Export Session Data
 
+Export a session as a ZIP archive (`context.jsonl`, `wire.jsonl`, `state.json`, ...):
+
 ```bash
-kimi export > backup.json
+kimi export -o session-backup.zip
 ```
+
+Inside a session, `/export` writes a Markdown file instead.
 
 ## Best Practices
 
