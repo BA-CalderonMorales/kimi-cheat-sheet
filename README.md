@@ -438,8 +438,8 @@ cat error.log | kimi --print "find the root cause"
 # With output redirection
 kimi --print "generate docs" > output.md
 
-# JSON output
-kimi --print --output-format json "analyze this"
+# Machine-readable output (JSONL)
+kimi --print --output-format stream-json "analyze this"
 ```
 
 </details>
@@ -605,20 +605,34 @@ cat README.md | kimi --print "extract API endpoints" | grep http
 | Option | Description |
 |--------|-------------|
 | `-w, --work-dir` | Set working directory |
-| `--add-dir` | Add directory to workspace |
-| `-S, --session` | Resume specific session |
+| `--add-dir` | Add directory to workspace (repeatable) |
+| `-S, --session` / `-r, --resume` | Resume session (with ID; interactive picker without) |
 | `-C, --continue` | Continue previous session |
 | `-m, --model` | Select model |
 | `--thinking / --no-thinking` | Enable/disable thinking mode |
-| `-y, --yolo` | Auto-approve all actions |
-| `-p, --prompt` | Provide prompt directly |
-| `--print` | Non-interactive mode |
-| `--quiet` | Minimal output mode |
-| `--config-file` | Use custom config file |
-| `--agent` | Select built-in agent |
+| `-y, --yolo` (aliases `--yes`, `--auto-approve`) | Auto-approve all tool calls; user still reachable |
+| `--afk` | Away-from-keyboard: auto-approve and auto-dismiss questions |
+| `-p, --prompt` (alias `-c, --command`) | Provide prompt directly |
+| `--print` | Non-interactive mode, implicitly enables `--afk` |
+| `--quiet` | Shortcut for `--print --output-format text --final-message-only` |
+| `--plan` | Start a new session in plan mode |
+| `--config` | Load TOML/JSON configuration string |
+| `--config-file` | Use custom config file (TOML or JSON) |
+| `--agent` | Select built-in agent (`default`, `okabe`) |
 | `--agent-file` | Use custom agent file |
-| `--mcp-config-file` | Load MCP config |
-| `--skills-dir` | Add skills directory |
+| `--mcp-config-file` | Load MCP config file (repeatable) |
+| `--mcp-config` | Load MCP config JSON string (repeatable) |
+| `--skills-dir` | Append skills directories, overriding auto-discovery (repeatable) |
+| `--max-steps-per-turn` | Max steps per turn (default 1000) |
+| `--max-retries-per-step` | Max retries per step |
+| `--max-ralph-iterations` | Ralph Loop iterations (0 disables, -1 unlimited) |
+| `--input-format` | Print-mode input format: `text` or `stream-json` |
+| `--output-format` | Print-mode output format: `text` or `stream-json` |
+| `--final-message-only` | Only output the final assistant message |
+| `-V, --version` | Show version number and exit |
+| `--verbose` | Detailed runtime information |
+| `--debug` | Log debug info to `~/.kimi/logs/kimi.log` |
+| `--acp` | ACP server mode (deprecated, use `kimi acp`) |
 
 ### Subcommands
 
