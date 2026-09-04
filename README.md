@@ -164,13 +164,12 @@ kimi --quiet "your prompt"
 # Continue previous session
 kimi --continue
 
-# List sessions (via export)
-kimi export --list
-
-# Export session data
-kimi export > session_backup.json
+# Export a session as a ZIP archive
+# (context.jsonl, wire.jsonl, state.json, ...)
+kimi export -o session-backup.zip
 
 # Sessions persist context — use them for multi-turn problem solving
+# (Inside a session, /export writes a Markdown file instead)
 ```
 
 </details>
@@ -616,7 +615,7 @@ cat README.md | kimi --print "extract API endpoints" | grep http
 | `kimi login` | Authenticate with Kimi |
 | `kimi logout` | Sign out |
 | `kimi info` | Show version and protocol info |
-| `kimi export` | Export session data |
+| `kimi export` | Export a session as a ZIP file |
 | `kimi mcp` | Manage MCP configurations |
 | `kimi plugin` | Manage plugins |
 | `kimi term` | Run Toad TUI |
