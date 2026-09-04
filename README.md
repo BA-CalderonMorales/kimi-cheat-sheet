@@ -735,8 +735,8 @@ MIT License — Free to use and modify.
 
 ---
 
-**Last updated: July 2026**  
-**Based on**: Kimi Code CLI (pip: kimi-cli)
+**Last updated: September 2026 — Updated on 2026-09-03**  
+**Based on**: Kimi Code CLI 1.50.0 (official installer)
 
 ---
-*Last synced: 2026-07-19 via [workspace manager](https://github.com/BA-CalderonMorales)*
+*Last synced: 2026-09-03 via [workspace manager](https://github.com/BA-CalderonMorales)*
