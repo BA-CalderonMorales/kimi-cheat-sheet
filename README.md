@@ -4,34 +4,36 @@
 
 <a href="https://www.kimi.com/"><img width="1040" height="476" alt="Kimi cheat sheet" src="assets/image.png" /></a>
 
-> **Your practical guide to using Kimi Code CLI effectively — from first steps to advanced workflows.**
-
-A reference for developers who want to leverage Kimi's agentic capabilities while staying in control. Focuses on patterns that augment your thinking, not replace it.
-
-> **Note:** Kimi CLI is evolving into [Kimi Code](https://github.com/MoonshotAI/kimi-code) — the next-generation terminal AI agent from the same team. This project is being gradually wound down; the docs and existing installations remain available. Run `/upgrade` inside a session (or install via [kimi.com/code](https://kimi.com/code)) for a one-key migration — configuration and sessions are migrated automatically. See the [official docs](https://moonshotai.github.io/kimi-cli/en/) for the latest.
-
-**Based on official Kimi CLI documentation** — Commands verified against the [official Kimi repository](https://github.com/MoonshotAI/kimi-cli). For the latest updates, refer to the official docs.
+> A working reference for **Kimi Code CLI** ([github.com/MoonshotAI/kimi-code](https://github.com/MoonshotAI/kimi-code)). Every command below was checked against Kimi Code 2.3.1 and the [official docs](https://moonshotai.github.io/kimi-code/).
 
 </div>
+
+> **Kimi Code is the current CLI.** The old Python `kimi-cli` was archived in September 2026 and its final release (1.52.0) is a deprecation stub. Bare `kimi` now prints a notice and installs Kimi Code for you.
+>
+> - New here? Start with the [install guide](https://github.com/MoonshotAI/kimi-code#readme) and the [official docs](https://moonshotai.github.io/kimi-code/).
+> - Coming from the old CLI? See [Migrating](#migrating-from-the-old-kimi-cli) below.
 
 ## Quick Start
 
 ```bash
-# Install with the official script (installs uv first)
-curl -LsSf https://code.kimi.com/install.sh | bash
+# Install (macOS/Linux, single binary, no Node required)
+curl -fsSL https://code.kimi.com/kimi-code/install.sh | bash
 
-# Or via uv (Python 3.12-3.14 supported, 3.13 recommended)
-uv tool install --python 3.13 kimi-cli
+# Or with npm (needs Node 22.19+)
+npm install -g @moonshot-ai/kimi-code
 
-# Upgrade
-uv tool upgrade kimi-cli --no-cache
+# Or with Homebrew
+brew install kimi-code
 
-# Launch Kimi
+# Windows
+irm https://code.kimi.com/kimi-code/install.ps1 | iex
+
+# Launch and check the version
 kimi
-
-# Check version
 kimi --version
 ```
+
+The binary is called `kimi` whichever way you install it.
 
 ## Table of Contents
 
@@ -41,31 +43,28 @@ kimi --version
 - **[Level 4: Advanced Features](#level-4-advanced-features)**
 - **[Level 5: Expert Workflows](#level-5-expert-workflows)**
 - **[Command Reference](#command-reference)**
+- **[Migrating from the old Kimi CLI](#migrating-from-the-old-kimi-cli)**
 - **[Best Practices](#best-practices)**
 
 ## Level 1: Getting Started
 
-Essential commands to start using Kimi effectively.
-
 <details>
-<summary><strong>Installation & Setup</strong></summary>
+<summary><strong>Installation and Login</strong></summary>
 
 ```bash
-# Install with the official script (installs uv first)
-curl -LsSf https://code.kimi.com/install.sh | bash
+# Install
+curl -fsSL https://code.kimi.com/kimi-code/install.sh | bash
 
-# Or via uv
-uv tool install --python 3.13 kimi-cli
-
-# Verify installation
+# Verify
 kimi --version
 
-# Login to your Kimi account
+# Log in from the terminal (device-code flow, no TUI)
 kimi login
 
-# Check your configuration
-kimi info
+# Or log in from inside a session with /login
 ```
+
+`kimi login` prints a verification URL and a code. Open the URL, enter the code, and the token lands in the same place the TUI stores it.
 
 </details>
 
@@ -73,23 +72,12 @@ kimi info
 <summary><strong>First Steps</strong></summary>
 
 ```bash
-# Start interactive mode
-kimi
-
-# Run with a specific prompt
-kimi -p "explain this codebase"
-
-# Run in non-interactive mode (print mode)
-kimi --print "explain this codebase"
-
-# Continue previous session
-kimi --continue
-
-# Resume specific session
-kimi --session <SESSION_ID>
+kimi                              # interactive session in this directory
+kimi -p "explain this codebase"   # one prompt, non-interactive, prints the reply
+kimi --continue                   # pick up the most recent session here
+kimi --session                    # pick a session from a list
+kimi --session 01HZ...XYZ         # resume a specific session
 ```
-
-> **Login:** On first launch, run `/login` inside the session — pick **Kimi Code** for browser OAuth, or another platform and enter an API key. `/login` (and `/model`) require the default config file; they are unavailable when `--config` or `--config-file` is used.
 
 </details>
 
@@ -97,74 +85,50 @@ kimi --session <SESSION_ID>
 <summary><strong>Basic Navigation</strong></summary>
 
 ```bash
-# Keyboard shortcuts in interactive mode
-Ctrl+C                    # Interrupt current operation / clear input
-Ctrl+D                    # Exit Kimi
-Ctrl-X                    # Toggle agent/shell mode
-Shift-Tab                 # Toggle plan mode
-Ctrl-O                    # Edit in external editor
-Ctrl-J / Alt-Enter        # Insert newline
-Ctrl-S                    # Steer: inject input into the running turn
-Ctrl-V                    # Paste (text, images, video)
-Ctrl-E                    # Expand full approval request content
-↑/↓                       # History / question navigation
+# Keyboard shortcuts
+Enter                     # submit
+Shift-Enter / Ctrl-J      # newline
+↑/↓                       # browse input history
+Esc                       # close a popup, cancel a completion, or stop streaming
+Ctrl-C                    # interrupt streaming output, or clear the input box
+Ctrl-D                    # exit (with an empty input box)
+Shift-Tab                 # toggle Plan mode
+!                         # shell mode from an empty prompt
+Ctrl-G                    # edit the current input in $VISUAL or $EDITOR
+Ctrl-V                    # paste an image or video (Alt-V on Windows)
+Ctrl-S                    # steer the running turn with your input
+Ctrl-O                    # expand or collapse tool output
+Ctrl-E                    # expand the full diff in an approval prompt
+Ctrl-T                    # expand or collapse the todo list
+Esc Esc                   # open the undo selector
 
-# Completion menu: type / for slash commands, @ for file paths
-# (arrow keys + Enter to select)
-
-# Working directory options
-kimi -w /path/to/project                    # Set working directory
-kimi --add-dir /path/to/shared              # Add additional directory
+# Additional directories
+kimi --add-dir /path/to/shared
 ```
 
 </details>
 
 ## Level 2: Basic Commands
 
-Core patterns for everyday development.
-
 <details>
-<summary><strong>Thinking Mode</strong></summary>
+<summary><strong>Permission Modes</strong></summary>
 
 ```bash
-# Enable thinking mode (shows reasoning)
-kimi --thinking
-
-# Disable thinking for faster responses
-kimi --no-thinking
-
-# Thinking mode helps you understand HOW Kimi approaches problems,
-# not just the solution. Use it when learning new patterns.
+kimi                             # manual: ask before each risky action
+kimi --yolo                      # "Ask When Needed": routine edits and commands run, risky ones still ask
+kimi --auto                      # "Never Ask": everything runs and is decided automatically
+kimi --plan                      # start in Plan mode
 ```
 
-</details>
+Three modes, and the middle one is not what the old `--yolo` did. In Kimi Code, `--yolo` skips approval for regular tool calls but still asks about risky actions, questions, and plan exits. `--auto` skips all of it.
 
-<details>
-<summary><strong>Approval Modes</strong></summary>
+| Mode | Use it for |
+|---|---|
+| Manual (default) | Day-to-day work where you want to see each step |
+| Ask When Needed (`--yolo`) | Trusted repos, repetitive edits, batch refactors |
+| Never Ask (`--auto`) | CI, scripted runs, sandboxed environments |
 
-```bash
-# Interactive mode (default) — approve each action
-kimi
-
-# YOLO mode — auto-approve all actions, user still reachable
-kimi --yolo
-
-# AFK mode — auto-approve all actions and auto-dismiss questions
-kimi --afk
-
-# Print mode — non-interactive, implicitly enables --afk
-kimi --print "your prompt"
-
-# Quiet mode — minimal output
-kimi --quiet "your prompt"
-```
-
-**When to use each:**
-- **Interactive**: Default for most work — stay in control
-- **YOLO**: Trusted, repetitive tasks in known codebases — user still reachable
-- **AFK** (`--afk` or `/afk`): Unattended runs — auto-approves and auto-dismisses questions
-- **Print**: CI/CD, automation, scripting (implicitly enables `--afk`)
-- **Quiet**: Piping output to other tools
+Plan mode is never bypassed by `--yolo`. Exiting plan mode still needs your review.
 
 </details>
 
@@ -172,132 +136,121 @@ kimi --quiet "your prompt"
 <summary><strong>Session Management</strong></summary>
 
 ```bash
-# Continue previous session
-kimi --continue
+kimi --continue                   # most recent session in this directory
+kimi --session                    # interactive picker
+kimi -S 01HZ...XYZ                # resume by ID
 
-# Export a session as a ZIP archive
-# (context.jsonl, wire.jsonl, state.json, ...)
-kimi export -o session-backup.zip
+kimi export                       # export the most recent session as a ZIP
+kimi export 01HZ...XYZ -o out.zip
+kimi export -y                    # skip the confirmation prompt
 
-# Sessions persist context — use them for multi-turn problem solving
-# (Inside a session, /export writes a Markdown file instead)
+kimi session list                 # list sessions non-interactively
 ```
+
+Inside a session, `/export` writes a Markdown file. `/export-debug-zip` writes the debug archive.
 
 </details>
 
 <details>
-<summary><strong>File and Directory Operations</strong></summary>
+<summary><strong>Slash Commands</strong></summary>
+
+Type `/` in the TUI to see the list. These are the ones in 2.3.1:
 
 ```bash
-# Read files
-kimi -p "Read src/app.py and explain the main function"
+# Account and configuration
+/login                    # log in (OAuth device code for Kimi Code, API key for Kimi Platform)
+/logout                   # clear credentials
+/provider                 # manage providers and refresh model lists
+/model                    # switch model
+/secondary-model          # pick the model subagents use (alias: /subagent-model)
+/settings                 # open the settings panel (alias: /config)
+/permission               # choose a permission mode
+/experiments              # experimental features (alias: /experimental)
+/editor                   # set the external editor
+/theme                    # switch the theme
 
-# Edit files
-kimi -p "Add error handling to src/utils.py"
+# Session management
+/new                      # fresh session (alias: /clear)
+/sessions                 # browse and restore sessions (alias: /resume)
+/tasks                    # background task list (alias: /task)
+/fork                     # fork the session, keep this one open
+/title [text]             # show or set the session title (alias: /rename)
+/compact [instruction]     # compact the context
+/undo [count]             # undo recent prompts
+/reload                   # reload config.toml and tui.toml
+/reload-tui               # reload tui.toml only
+/init                     # generate AGENTS.md
+/export-md [path]         # export the session as Markdown (alias: /export)
+/export-debug-zip         # export the session as a debug ZIP
+/copy                     # copy the last assistant message
+/add-dir [path]           # add a workspace directory
+/web                      # open this session in the web UI
+/desktop                  # open the desktop app page (alias: /install-desktop)
 
-# Multiple directories
-kimi --add-dir ../shared --add-dir ../utils -p "analyze all"
+# Modes and run control
+/yolo                     # Ask When Needed (alias: /yes)
+/auto                     # Never Ask
+/plan [on|off]            # toggle Plan mode
+/swarm                    # swarm mode on or off
+/tower                    # Tower multi-agent mode
+/goal                     # autonomous goal mode
 
-# View project structure
-kimi -p "Explain the architecture of this project"
+# Information
+/help                     # shortcuts and command list (aliases: /h, /?)
+/btw [question]           # side question, does not touch the main conversation
+/usage                    # token usage and quota
+/status                   # session runtime state
+/mcp                      # MCP servers and their status
+/plugins                  # plugin manager
+/version                  # version number
+/feedback                 # send feedback (alias: /bug)
+
+# Exit
+/exit                     # quit (aliases: /quit, /q)
 ```
 
-</details>
+Built-in skills ship as their own slash commands: `/mcp-config`, `/custom-theme`, `/update-config`, `/check-kimi-code-docs`, `/import-from-cc-codex`, and `/sub-skill`.
 
-<details>
-<summary><strong>Interactive Slash Commands</strong></summary>
-
-Use these inside an active Kimi session (type `/` to see the popup).
-
-**Session control:**
-```bash
-/new                      # Create a new session
-/sessions                 # List and switch sessions (alias: /resume)
-/title <text>             # View or set session title (alias: /rename)
-/undo                     # Roll back to a previous turn and retry
-/fork                     # Fork the current session
-/clear                    # Clear context and start fresh (alias: /reset)
-/compact                  # Manually compact context to reduce tokens
-/export                   # Export session to a Markdown file
-/import <path|session>    # Import context from a file or session
-```
-
-**Configuration:**
-```bash
-/model                    # Switch model and thinking mode
-/login                    # Log in or configure platform (alias: /setup)
-/logout                   # Sign out
-/reload                   # Reload config without exiting
-/editor                   # Set external editor (Ctrl-O to open)
-/theme dark|light         # Switch terminal color theme
-```
-
-**Approval modes:**
-```bash
-/yolo                     # Toggle auto-approve all actions
-/afk                      # Toggle AFK mode (auto-approves + auto-dismisses questions)
-/plan                     # Toggle plan mode (read-only exploration)
-```
-
-**Skills and workspace:**
-```bash
-/skill:<name>             # Load a specific skill
-/flow:<name>              # Execute a flow skill
-/add-dir <path>           # Add directory to workspace scope
-/init                     # Analyze project and generate AGENTS.md
-```
-
-**Debugging and info:**
-```bash
-/debug                    # Show messages, tokens, checkpoints, history
-/usage                    # Show API usage and quota (alias: /status)
-/mcp                      # Show connected MCP servers and tools
-/hooks                    # Show configured hooks
-/task                     # Open background task browser
-/web                      # Switch to Web UI
-/vis                      # Switch to Agent Tracing Visualizer
-```
-
-**Utility:**
-```bash
-/btw <question>           # Ask a side question without interrupting main chat
-/help                     # Show help (aliases: /h, /?)
-/version                  # Show version
-/changelog                # Show recent changelog (alias: /release-notes)
-/feedback                 # Submit feedback
-/upgrade                  # Install Kimi Code (automatic migration)
-```
+Your own skills show up as `/skill:<name>`. Sub-skills appear as `/<parent>.<sub>`, for example `/code-style.review`.
 
 </details>
 
 ## Level 3: Intermediate Usage
 
-Configuration and customization options.
-
 <details>
 <summary><strong>Configuration</strong></summary>
 
 ```bash
-# Config file location: ~/.kimi/config.toml (TOML or JSON)
+# ~/.kimi-code/config.toml   runtime settings
+# ~/.kimi-code/tui.toml      terminal UI preferences
+# ~/.kimi-code/mcp.json      MCP servers
+# Override the whole directory with KIMI_CODE_HOME
 
-# Common settings:
-# - default_model
-# - default_thinking
-# - default_yolo
-# - default_plan_mode
-# - theme (dark/light)
-# - default_editor
-# - skip_afk_prompt_injection
-# - show_thinking_stream
-# - merge_all_available_skills (default true)
-# - telemetry (default true)
-# - loop_control.max_steps_per_turn (default 1000)
+# Most useful settings
+default_model = "kimi-code/k3"
+default_permission_mode = "manual"     # manual | yolo | auto
+default_plan_mode = false
+merge_all_available_skills = true
+telemetry = true
 
-# Use custom config file (TOML or JSON)
-kimi --config-file /path/to/config.toml
+[thinking]
+enabled = true
+effort = "high"                       # low | medium | high | xhigh | max
 
-# Inline config override (TOML or JSON)
-kimi --config '{"default_thinking": false}'
+[loop_control]
+max_attempts_per_step = 10
+reserved_context_size = 50000
+
+[task]
+max_running_tasks = 4
+```
+
+Validate a config before you switch to it:
+
+```bash
+kimi doctor                    # check config.toml and tui.toml
+kimi doctor config ./config.toml
+kimi doctor tui ./tui.toml
 ```
 
 </details>
@@ -306,13 +259,35 @@ kimi --config '{"default_thinking": false}'
 <summary><strong>Model Selection</strong></summary>
 
 ```bash
-# Use specific model (kimi-for-coding is the default model)
-kimi -m kimi-for-coding
+# Managed aliases are prefixed with kimi-code/
+kimi -m kimi-code/kimi-for-coding
+kimi -m kimi-code/k3
 
-# List and switch models interactively
-# Run /model inside a session (refreshes the model list)
+# Switch from inside a session
+/model
 
-# Model capabilities vary — check kimi info for details
+# Refresh the model list from providers
+/provider refresh
+```
+
+| Model ID | Context | Notes |
+|---|---|---|
+| `kimi-code/k3.1-pro` | 1M | Flagship, released Oct 23 2026 |
+| `kimi-code/k3.1-pro-highspeed` | 1M | Roughly 2-3x faster than the flagship |
+| `kimi-code/k3` | 1M | K3, 2.8T params |
+| `kimi-code/k3-256k` | 256K | K3 on a smaller context budget |
+| `kimi-code/kimi-for-coding` | 1M | K2.8 Preview, the default for coding |
+| `kimi-code/kimi-for-coding-highspeed` | 256K | K2.7 Code, 5-6x faster, higher price |
+
+Effort levels are `low`, `high`, and `max` on the K3 family. K2.8 Preview defaults to `max`. K3.1 Pro rejects thinking-disabled requests.
+
+The `kimi-k2*` series is retired. Do not put it in a config.
+
+Subagents can run on a different, cheaper model:
+
+```toml
+[secondary_model]
+default_model = "kimi-code/kimi-for-coding-highspeed"
 ```
 
 </details>
@@ -321,89 +296,54 @@ kimi -m kimi-for-coding
 <summary><strong>Custom Agents</strong></summary>
 
 ```bash
-# Use built-in agent
-kimi --agent okabe
-
-# Use custom agent file
-kimi --agent-file /path/to/agent.yaml
-
-# Agents define behavior patterns — use them to specialize Kimi for specific tasks
+# Start a session with a specific agent
+kimi --agent reviewer
+kimi --agent-file /path/to/agent.md
 ```
+
+The agent is bound when the session is created and cannot be switched later in that session. `--agent` and `--agent-file` cannot be combined, and neither works with `--session` or `--continue`.
 
 </details>
 
 <details>
 <summary><strong>AGENTS.md for Project Context</strong></summary>
 
-```bash
-# Create AGENTS.md in project root
-# Kimi will read this for project-specific context
-
-# Example AGENTS.md content:
-"""
-# Project Guidelines
+```markdown
+# AGENTS.md in the project root
 
 ## Tech Stack
 - Python 3.12 with FastAPI
-- PostgreSQL database
-- pytest for testing
+- PostgreSQL
+- pytest
 
 ## Patterns
 - Use dependency injection
 - Write async functions for I/O
-- Follow PEP 8 style guide
-"""
+- Follow PEP 8
 ```
+
+`/init` writes one for you by analyzing the project.
 
 </details>
 
 ## Level 4: Advanced Features
 
-Powerful features for complex workflows.
-
 <details>
 <summary><strong>MCP Integration</strong></summary>
 
 ```bash
-# MCP (Model Context Protocol) extends Kimi with external tools
+# Configure in the TUI
+/mcp-config
 
-# Add streamable HTTP server
-kimi mcp add --transport http context7 https://mcp.context7.com/mcp --header "CONTEXT7_API_KEY: your-key"
-
-# Add stdio server
-kimi mcp add --transport stdio chrome-devtools -- npx chrome-devtools-mcp@latest
-
-# List configured servers
-kimi mcp list
-
-# Remove a server
-kimi mcp remove chrome-devtools
-
-# Authorize an MCP server (OAuth)
-kimi mcp auth linear
-
-# Test a server connection and list its tools
-kimi mcp test context7
-
-# Clear a cached OAuth token (re-auth with kimi mcp auth <name>)
-kimi mcp reset-auth linear
-
-# MCP enables:
-# - Database connections
-# - API integrations
-# - Custom tools
+# Or edit ~/.kimi-code/mcp.json
 ```
-
-MCP server config lives in `~/.kimi/mcp.json` (`mcpServers` format, compatible with other MCP clients):
 
 ```json
 {
   "mcpServers": {
     "context7": {
       "url": "https://mcp.context7.com/mcp",
-      "headers": {
-        "CONTEXT7_API_KEY": "your-key"
-      }
+      "headers": { "CONTEXT7_API_KEY": "{env:CONTEXT7_API_KEY}" }
     },
     "chrome-devtools": {
       "command": "npx",
@@ -413,39 +353,42 @@ MCP server config lives in `~/.kimi/mcp.json` (`mcpServers` format, compatible w
 }
 ```
 
-Or load from another file / pass JSON directly:
+Project-local servers go in `<project>/.kimi-code/mcp.json`.
 
-```bash
-kimi --mcp-config-file /path/to/mcp.json
-kimi --mcp-config '{"mcpServers": {"test": {"url": "https://..."}}}'
+Timeouts live in `config.toml` under `[mcp]`:
+
+```toml
+[mcp]
+startup_timeout_ms = 30000
+tool_timeout_ms = 60000
+default_deferred = false     # load tools on demand
 ```
 
 </details>
 
 <details>
-<summary><strong>Skills System</strong></summary>
+<summary><strong>Agent Skills</strong></summary>
 
 ```bash
-# Skills are reusable capabilities
-# User-level: ~/.kimi/skills/**/SKILL.md
-# (also ~/.claude/skills/, ~/.codex/skills/ — merged by default)
-# Project-level: .kimi/skills/, .claude/skills/, .codex/skills/ (repo root)
-# Discovery priority: Project > User > Extra > Built-in
-# Single-file <name>.md skills are also supported
+# Load skills from a custom directory, replacing auto-discovery for this run
+kimi --skills-dir /path/to/team-skills
 
-# Add extra skills directories (additive, via config)
-# extra_skill_dirs = ["~/my-skills-collection"]
-
-# Override auto-discovery with your own directories (repeatable)
-kimi --skills-dir /path/to/custom/skills
-
-# Skill format (YAML frontmatter + body):
-# ---
-# name: your-skill-name
-# description: When and why to use this skill
-# ---
-# Detailed instructions here
+# Or add directories permanently
+# extra_skill_dirs = ["~/my-skills-collection"] in config.toml
 ```
+
+Skills are `SKILL.md` files with YAML frontmatter:
+
+```markdown
+---
+name: your-skill-name
+description: When and why to use this skill
+---
+
+Detailed instructions here.
+```
+
+Invoke one with `/skill:<name>`.
 
 </details>
 
@@ -453,154 +396,140 @@ kimi --skills-dir /path/to/custom/skills
 <summary><strong>Non-Interactive Automation</strong></summary>
 
 ```bash
-# Print mode for automation
-kimi --print "summarize all TODO comments"
+# One prompt, print the reply
+kimi -p "summarize all TODO comments"
 
-# With input piping
-cat error.log | kimi --print "find the root cause"
+# Machine-readable output, one JSON object per line
+kimi -p "list changed files" --output-format stream-json
 
-# With output redirection
-kimi --print "generate docs" > output.md
+# Pipe input
+cat error.log | kimi -p "find the root cause"
 
-# Machine-readable output (JSONL)
-kimi --print --output-format stream-json "analyze this"
+# Redirect output
+kimi -p "generate docs" > output.md
 ```
+
+In `-p` mode no approval is requested: regular tool calls run under the `auto` policy, while static deny rules still apply. `--output-format` only works with `--prompt`, and `--prompt` cannot be combined with `--yolo`, `--auto`, or `--plan`.
+
+Exit codes are meaningful: `0` when the goal completes, `3` when it blocks, `6` when it pauses.
 
 </details>
 
 <details>
 <summary><strong>Background Tasks</strong></summary>
 
-```bash
-# Kimi supports background task execution
-# Configure in ~/.kimi/config.toml:
-# [background]
-# max_running_tasks = 4
-
-# Useful for long-running operations
+```toml
+[task]
+max_running_tasks = 4
+keep_alive_on_exit = false
+bash_task_timeout_s = 600
+print_background_mode = "steer"
 ```
+
+Background tasks come from the Bash tool or a subagent's `run_in_background`. In print mode Kimi Code stays alive while they run, so a slow build does not end the run.
 
 </details>
 
 <details>
-<summary><strong>Shell Command Mode</strong></summary>
+<summary><strong>Shell Mode</strong></summary>
 
-Kimi CLI doubles as a shell. Press Ctrl+X to toggle shell command mode, letting you run shell commands directly without leaving Kimi.
+Press `!` in an empty prompt to drop into a shell. Commands run in the session's working directory and their output stays in the session. Press `Ctrl-B` while a command runs to move it to a background task.
 
-```bash
-# In interactive mode, press Ctrl+X to switch to shell mode
-# Run any shell command natively
-ls -la
-git status
-npm test
+</details>
 
-# Press Ctrl+X again to return to agent mode
+<details>
+<summary><strong>Hooks</strong></summary>
+
+```toml
+[[hooks]]
+event = "PreToolUse"
+matcher = "Bash"
+command = "node ~/.kimi-code/hooks/check-bash.mjs"
+timeout = 5
 ```
 
-Built-in shell commands like `cd` are handled by the agent, not the shell.
+Hooks run scripts at lifecycle checkpoints. The useful ones are formatting after an edit, extra approval on a dangerous command, and notifications when a long task finishes.
+
 </details>
 
 <details>
 <summary><strong>IDE Integration (ACP)</strong></summary>
 
-Kimi CLI supports Agent Client Protocol (ACP) for IDE integration:
-
 ```bash
-# Start as ACP server
+# Run as an ACP server
 kimi acp
-
-# Configure in Zed (~/.config/zed/settings.json):
-# {
-#   "agent_servers": {
-#     "Kimi CLI": {
-#       "type": "custom",
-#       "command": "kimi",
-#       "args": ["acp"],
-#       "env": {}
-#     }
-#   }
-# }
-
-# VS Code extension available via:
-# Kimi Code VS Code Extension in marketplace
 ```
 
-See [IDE Integration Docs](https://moonshotai.github.io/kimi-cli/en/guides/ides.html) for details.
-</details>
-
-<details>
-<summary><strong>Zsh Integration</strong></summary>
-
-Use Kimi CLI with Zsh for AI-powered shell:
-
-```bash
-# Install zsh-kimi-cli plugin
-git clone https://github.com/MoonshotAI/zsh-kimi-cli.git \
-  ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/kimi-cli
-
-# Add to ~/.zshrc plugins:
-plugins=(... kimi-cli)
-
-# Press Ctrl+X to switch to agent mode
+```json
+{
+  "agent_servers": {
+    "Kimi Code": {
+      "type": "custom",
+      "command": "kimi",
+      "args": ["acp"]
+    }
+  }
+}
 ```
 
-See [Zsh Integration Guide](https://github.com/MoonshotAI/zsh-kimi-cli) for details.
+The editor starts the process itself, so you rarely run `kimi acp` by hand. See [IDE Integration](https://moonshotai.github.io/kimi-code/en/guides/ides.html).
+
 </details>
 
 ## Level 5: Expert Workflows
-
-Advanced patterns for power users.
 
 <details>
 <summary><strong>Web Interface</strong></summary>
 
 ```bash
-# Run Kimi web interface
-kimi web
-
-# Provides browser-based interaction
-# Useful for visual workflows and sharing
+kimi web                      # run the server and open the browser
+kimi web --no-open            # start it without opening a browser
+kimi web --port 58628         # pick a port
+kimi web rotate-token         # issue a new bearer token
 ```
+
+The server binds to loopback by default and prints a bearer token that the web UI picks up from the URL fragment. `--dangerous-bypass-auth` turns authentication off entirely. Only use that on a trusted network.
+
+`kimi server` is deprecated and prints a notice instead of running. Use `kimi web`.
 
 </details>
 
 <details>
-<summary><strong>Visualization & Debugging</strong></summary>
+<summary><strong>Remote Control</strong></summary>
 
 ```bash
-# Run agent tracing visualizer
-kimi vis
-
-# Helps debug agent decision-making
-# Understand HOW Kimi arrived at a solution
+kimi rc          # alias: kimi remote
 ```
+
+Runs the local server and opens the web UI through Remote Control, so you can reach it from another device.
 
 </details>
 
 <details>
-<summary><strong>Plugin System</strong></summary>
+<summary><strong>Session Visualizer</strong></summary>
 
 ```bash
-# Manage plugins
-kimi plugin list
-kimi plugin install <plugin>
-kimi plugin remove <plugin>
-
-# Extend Kimi with custom functionality
+kimi vis                          # home view listing sessions
+kimi vis 01HZ...XYZ               # open one session
+kimi vis --host 0.0.0.0 --port 8123 --no-open
 ```
+
+Useful for watching how the agent reached a decision.
 
 </details>
 
 <details>
-<summary><strong>ACP Server Mode</strong></summary>
+<summary><strong>Providers</strong></summary>
 
 ```bash
-# Run as ACP (Agent Communication Protocol) server
-kimi acp
-
-# Enables integration with other tools
-# Used by term, web, and external integrations
+kimi provider list
+kimi provider list --json
+kimi provider catalog list anthropic
+kimi provider catalog add anthropic --api-key sk-ant-...
+kimi provider remove <providerId>
 ```
+
+Provider types are `kimi`, `anthropic`, `openai`, `openai_responses`, `google-genai`, and `vertexai`. Credentials come from the config file, not the shell environment, unless you point `api_key_env` at a variable.
 
 </details>
 
@@ -608,16 +537,30 @@ kimi acp
 <summary><strong>Piping and Scripting</strong></summary>
 
 ```bash
-# Pipe content to Kimi
-git diff | kimi --print "create a commit message"
+git diff | kimi -p "create a commit message"
 
-# Use in scripts
 #!/bin/bash
 FILES=$(find src -name "*.py")
-echo "$FILES" | kimi --print "check for syntax errors"
+echo "$FILES" | kimi -p "check for syntax errors"
 
-# Combine with other tools
-cat README.md | kimi --print "extract API endpoints" | grep http
+cat README.md | kimi -p "extract API endpoints" | grep http
+```
+
+</details>
+
+<details>
+<summary><strong>Goal Mode</strong></summary>
+
+```bash
+/goal Update the checkout docs, run docs build, and stop if still blocked after 20 turns
+```
+
+`/goal` keeps an objective alive across automatically continuing turns. Subcommands: `status`, `pause`, `resume`, `cancel`, `replace <objective>`, and `next <objective>`.
+
+If your objective starts with one of those words, put `--` first:
+
+```bash
+/goal -- cancel the old rollout note after the new docs are published
 ```
 
 </details>
@@ -627,116 +570,148 @@ cat README.md | kimi --print "extract API endpoints" | grep http
 ### Global Options
 
 | Option | Description |
-|--------|-------------|
-| `-w, --work-dir` | Set working directory |
-| `--add-dir` | Add directory to workspace (repeatable) |
-| `-S, --session` / `-r, --resume` | Resume session (with ID; interactive picker without) |
-| `-C, --continue` | Continue previous session |
-| `-m, --model` | Select model |
-| `--thinking / --no-thinking` | Enable/disable thinking mode |
-| `-y, --yolo` (aliases `--yes`, `--auto-approve`) | Auto-approve all tool calls; user still reachable |
-| `--afk` | Away-from-keyboard: auto-approve and auto-dismiss questions |
-| `-p, --prompt` (alias `-c, --command`) | Provide prompt directly |
-| `--print` | Non-interactive mode, implicitly enables `--afk` |
-| `--quiet` | Shortcut for `--print --output-format text --final-message-only` |
-| `--plan` | Start a new session in plan mode |
-| `--config` | Load TOML/JSON configuration string |
-| `--config-file` | Use custom config file (TOML or JSON) |
-| `--agent` | Select built-in agent (`default`, `okabe`) |
-| `--agent-file` | Use custom agent file |
-| `--mcp-config-file` | Load MCP config file (repeatable) |
-| `--mcp-config` | Load MCP config JSON string (repeatable) |
-| `--skills-dir` | Append skills directories, overriding auto-discovery (repeatable) |
-| `--max-steps-per-turn` | Max steps per turn (default 1000) |
-| `--max-retries-per-step` | Max retries per step |
-| `--max-ralph-iterations` | Ralph Loop iterations (0 disables, -1 unlimited) |
-| `--input-format` | Print-mode input format: `text` or `stream-json` |
-| `--output-format` | Print-mode output format: `text` or `stream-json` |
-| `--final-message-only` | Only output the final assistant message |
-| `-V, --version` | Show version number and exit |
-| `--verbose` | Detailed runtime information |
-| `--debug` | Log debug info to `~/.kimi/logs/kimi.log` |
-| `--acp` | ACP server mode (deprecated, use `kimi acp`) |
+|---|---|
+| `-V, --version` | Print the version and exit |
+| `-h, --help` | Show help |
+| `-S, --session [id]` | Resume a session; with an ID opens it, without one opens a picker |
+| `-c, --continue` | Continue the most recent session in this directory |
+| `-m, --model <model>` | Model alias for this run; defaults to `default_model` |
+| `-p, --prompt <prompt>` | Run one prompt non-interactively and print the reply |
+| `--output-format <format>` | `text` or `stream-json`; only valid with `--prompt` |
+| `-y, --yolo` | Start in Ask When Needed mode |
+| `--auto` | Start in Never Ask mode |
+| `--plan` | Start in Plan mode |
+| `--skills-dir <dir>` | Load skills from this directory instead of the discovered ones; repeatable |
+| `--agent <name>` | Start the session with this agent |
+| `--agent-file <path>` | Load an agent definition from a Markdown file and select it |
+| `--add-dir <dir>` | Add a workspace directory; repeatable |
+
+`-r` and `--resume` are hidden aliases for `--session`. `--yes` and `--auto-approve` are hidden aliases for `--yolo`.
+
+Mutually exclusive combinations, rejected at startup: `--continue` with `--session`, `--yolo` with `--auto`, and `--prompt` with `--yolo`, `--auto`, or `--plan`.
 
 ### Subcommands
 
 | Command | Description |
-|---------|-------------|
-| `kimi login` | Authenticate with Kimi |
-| `kimi logout` | Sign out |
-| `kimi info` | Show version and protocol info |
-| `kimi export` | Export a session as a ZIP file |
-| `kimi mcp` | Manage MCP configurations |
-| `kimi plugin` | Manage plugins |
-| `kimi term` | Run Toad TUI |
-| `kimi vis` | Run tracing visualizer |
-| `kimi web` | Run web interface |
-| `kimi acp` | Run ACP server |
+|---|---|
+| `kimi login` | Log in with the device-code flow |
+| `kimi doctor` | Validate `config.toml` and `tui.toml` |
+| `kimi export` | Export a session as a ZIP |
+| `kimi fork` | Fork a session into a new session |
+| `kimi migrate` | Migrate data from a legacy kimi-cli install |
+| `kimi upgrade` | Check for and install updates (alias: `kimi update`) |
+| `kimi provider` | Manage providers (`add`, `remove`, `list`, `catalog`) |
+| `kimi session` | Manage sessions (`list`) |
+| `kimi acp` | Run as an ACP server over stdio |
+| `kimi web` | Run the local server and open the web UI |
+| `kimi rc` | Run the local server through Remote Control (alias: `kimi remote`) |
+| `kimi vis` | Open the session visualizer |
+| `kimi app` | Open the desktop app with a new chat for this directory |
+| `kimi install-desktop` | Open the desktop app download page |
+| `kimi server` | Deprecated; prints a notice and exits |
+
+### Data Locations
+
+| Path | Contents |
+|---|---|
+| `~/.kimi-code/config.toml` | Runtime settings |
+| `~/.kimi-code/tui.toml` | Terminal UI preferences |
+| `~/.kimi-code/mcp.json` | MCP servers |
+| `~/.kimi-code/credentials/` | OAuth tokens |
+| `~/.kimi-code/sessions/` | Session history |
+| `~/.kimi-code/skills/` | User-level skills |
+| `~/.kimi-code/plugins/` | Plugins |
+| `~/.kimi-code/logs/kimi-code.log` | Diagnostic log |
+| `<project>/.kimi-code/local.toml` | Project-local workspace settings |
+
+## Migrating from the old Kimi CLI
+
+The old Python `kimi-cli` was archived on September 23, 2026. Release 1.52.0 is a stub: running `kimi` with no arguments prints a deprecation notice and runs the Kimi Code installer instead.
+
+```bash
+# Migrate config, MCP servers, history, and chosen sessions
+kimi migrate
+
+# Non-interactive
+kimi migrate --run
+kimi migrate --run --config-only
+```
+
+Migrated: `config.toml`, MCP server definitions, input history, and selected sessions (tagged `[imported]`).
+
+Not migrated: OAuth login credentials, MCP OAuth authorizations, and kimi-cli plugins. Run `/login` again and re-authorize each MCP server.
+
+Migration never modifies or deletes `~/.kimi/`. Once you are happy with Kimi Code, remove the old package so its `kimi` executable stops shadowing the new one:
+
+```bash
+uv tool uninstall kimi-cli     # if you installed it with uv
+brew uninstall kimi-cli        # if you used Homebrew
+```
 
 ## Best Practices
 
 ### Think Critically
 
-Kimi is an assistant, not a replacement for your judgment:
-
-- **Review changes** before accepting — understand what changed and why
-- **Use thinking mode** when learning — see the reasoning, not just results
-- **Start interactive** — switch to --yolo only for trusted, repetitive tasks
-- **Question assumptions** — if something feels off, dig deeper
+- Read the diff before you accept it
+- Use Plan mode when you are still deciding what to build
+- Start in manual mode; switch to Ask When Needed only for trusted repos
+- Push back when the plan feels wrong
 
 ### Stay Secure
 
-- Never commit API keys or credentials
-- Review code before running in production
-- Use --yolo sparingly in unknown codebases
-- Keep sensitive data out of prompts when possible
+- Keep API keys in `api_key_env`, not in `config.toml`
+- Deny dangerous commands with `[[permission.rules]]`
+- Review what each MCP server can reach before you connect it
+- Keep `Never Ask` mode for isolated environments, not your laptop
 
 ### Work Effectively
 
-- Use AGENTS.md for project context
-- Create skills for repetitive workflows
-- Leverage sessions for multi-turn problems
-- Combine Kimi with traditional tools (grep, find, git)
-
-### Continuous Learning
-
-- Check kimi info for available capabilities
-- Review thinking output to understand patterns
-- Build your own skills for domain-specific tasks
-- Share effective patterns with your team
+- Commit an `AGENTS.md` so every session starts with the same context
+- Package repeated workflows as skills
+- Use sessions for multi-turn problems, and fork when you want to explore a different approach
+- Give subagents a cheaper model through `[secondary_model]`
 
 ## Additional Resources
 
-**Official Kimi Documentation:**
-- [Kimi CLI Repository](https://github.com/MoonshotAI/kimi-cli) — Main repository and documentation
-- [Kimi Code Repository](https://github.com/MoonshotAI/kimi-code) — Next-generation terminal AI agent
-- [Official Documentation](https://moonshotai.github.io/kimi-cli/en/) — Complete documentation
-- [LLM-Friendly Version](https://moonshotai.github.io/kimi-cli/en.md) — Per-page Markdown for AI consumption (append `.md` to any docs page)
+**Official documentation:**
+- [Kimi Code docs](https://moonshotai.github.io/kimi-code/) - Documentation hub
+- [Getting started](https://moonshotai.github.io/kimi-code/en/guides/getting-started.html) - Install and first run
+- [kimi command](https://moonshotai.github.io/kimi-code/en/reference/kimi-command.html) - Flags and subcommands
+- [Slash commands](https://moonshotai.github.io/kimi-code/en/reference/slash-commands.html) - TUI command reference
+- [Keyboard shortcuts](https://moonshotai.github.io/kimi-code/en/reference/keyboard.html) - Key bindings
+- [Config files](https://moonshotai.github.io/kimi-code/en/configuration/config-files.html) - Every setting
+- [Providers and models](https://moonshotai.github.io/kimi-code/en/configuration/providers.html) - Model IDs and credentials
+- [MCP](https://moonshotai.github.io/kimi-code/en/customization/mcp.html) - MCP setup
+- [Skills](https://moonshotai.github.io/kimi-code/en/customization/skills.html) - Agent skills
+- [Migration guide](https://moonshotai.github.io/kimi-code/en/guides/migration.html) - From kimi-cli
 
-**Related Tools:**
-- [Codex Cheat Sheet](https://github.com/BA-CalderonMorales/codex-cheat-sheet) — Companion guide for OpenAI Codex CLI
+**Repositories:**
+- [MoonshotAI/kimi-code](https://github.com/MoonshotAI/kimi-code) - The current CLI. MIT licensed, active development
+- [Kimi Code docs](https://moonshotai.github.io/kimi-code/) - Documentation hub
+- [MoonshotAI/kimi-cli](https://github.com/MoonshotAI/kimi-cli) - Archived Python CLI, kept for reference
 
-**Community:**
-- GitHub Issues — Bug reports and feature requests
-- Discussions — Community Q&A and workflows
+**Install and getting started:**
+- [kimi.com/code](https://www.kimi.com/code) - Product page and desktop app
+- [Getting started](https://moonshotai.github.io/kimi-code/en/guides/getting-started.html) - Install and first run
+
+**Related tools:**
+- [Codex Cheat Sheet](https://github.com/BA-CalderonMorales/codex-cheat-sheet) - Companion guide for OpenAI Codex CLI
+- [OpenCode Cheat Sheet](https://github.com/BA-CalderonMorales/opencode-cheat-sheet) - Companion guide for OpenCode
 
 ## Contributing
 
-Contributions are welcome:
+Corrections are welcome. Report anything that no longer matches `kimi --help`.
 
-- Report issues or inconsistencies
+- Report bugs or inconsistencies
 - Suggest new examples
-- Share your workflows
 - Improve documentation
+- Share your workflows
 
 ## License
 
-MIT License — Free to use and modify.
+MIT License. Free to use and modify.
 
 ---
 
-**Last updated: September 2026 — Updated on 2026-09-03**  
-**Based on**: Kimi Code CLI 1.50.0 (official installer)
-
----
-*Last synced: 2026-09-03 via [workspace manager](https://github.com/BA-CalderonMorales)*
+**Last updated: October 2026**
+**Based on**: Kimi Code CLI 2.3.1 (npm: `@moonshot-ai/kimi-code`, Homebrew: `kimi-code`)

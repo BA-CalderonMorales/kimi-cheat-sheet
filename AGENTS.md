@@ -10,8 +10,9 @@
 - `assets/` holds the sheet imagery; `.github/workflows/security-scan.yml`
   is the CI gate (shared org-level scan, Trivy by default).
 - Community surface: `CONTRIBUTING.md`, `CODE_OF_CONDUCT.md`, `LICENSE`.
-- Kimi CLI is evolving into Kimi Code; sheet content tracks the official
-  docs and calls out the migration path where relevant.
+- The sheet targets **Kimi Code CLI** (`github.com/MoonshotAI/kimi-code`,
+  npm `@moonshot-ai/kimi-code`). The old Python `kimi-cli` was archived in
+  September 2026 and is documented only as a migration source.
 - Pre-rewrite leftovers are pruned; use Git history for legacy reference.
 
 ## Key Sections
@@ -21,7 +22,7 @@
 | The sheet: levels, commands, examples | `README.md` |
 | On-disk skills and how to invoke them | `skills/` |
 | Contribution flow and standards | `CONTRIBUTING.md` |
-| Official Kimi truth | [moonshotai.github.io/kimi-cli](https://moonshotai.github.io/kimi-cli/) |
+| Official Kimi truth | [moonshotai.github.io/kimi-code](https://moonshotai.github.io/kimi-code/) |
 | Security gate behavior | `.github/workflows/security-scan.yml` |
 
 Lost in the woods? Start with `README.md` for *what the sheet covers*, then
@@ -43,7 +44,7 @@ Lost in the woods? Start with `README.md` for *what the sheet covers*, then
 ## Rules
 
 - Accuracy first: verify commands with `kimi --help` and the official Kimi
-  docs (moonshotai.github.io/kimi-cli) before documenting; update the
+  Code docs (moonshotai.github.io/kimi-code) before documenting; update the
   "Last updated" date in the README.
 - Think critically - cover WHEN, not just HOW; no hype, only practical
   utility.

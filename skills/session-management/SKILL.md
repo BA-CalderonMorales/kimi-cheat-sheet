@@ -1,44 +1,54 @@
 ---
 name: session-management
-description: Use sessions effectively for multi-turn problem solving
+description: Use Kimi Code sessions effectively for multi-turn problem solving
 ---
 
 # Session Management
 
-Sessions preserve context across interactions.
+Sessions preserve context across turns.
 
-## Continue Previous Session
+## Continue the previous session
 
 ```bash
 kimi --continue
 ```
 
-## Resume Specific Session
+## Resume a specific session
 
 ```bash
-kimi --session <SESSION_ID>
+kimi --session 01HZ...XYZ
+kimi --session          # interactive picker
 ```
 
-## Export Session Data
+Inside a session, `/sessions` opens the same picker.
 
-Export a session as a ZIP archive (`context.jsonl`, `wire.jsonl`, `state.json`, ...):
+## Export a session
 
 ```bash
-kimi export -o session-backup.zip
+kimi export                      # most recent session, as a ZIP
+kimi export 01HZ...XYZ -o out.zip
+kimi export -y                   # skip the confirmation prompt
 ```
 
-Inside a session, `/export` writes a Markdown file instead.
+Inside a session, `/export` writes Markdown and `/export-debug-zip` writes the debug archive.
 
-## Best Practices
+## Fork instead of starting over
 
-- Use sessions for complex, multi-step problems
-- Export important sessions before major changes
-- Start fresh sessions for unrelated tasks
-- Sessions persist until explicitly cleared
+```bash
+kimi fork 01HZ...XYZ
+```
 
-## When to Start Fresh
+Or use `/fork` in the TUI. The original stays untouched, so you can try a different approach without losing the original.
 
-- Context has become cluttered
-- Switching to unrelated work
-- Previous attempts led to confusion
-- Want to try a different approach
+## When to start fresh
+
+- The context has picked up clutter from an unrelated task
+- You are switching to different work
+- Earlier attempts led nowhere and a clean read will help
+- You want to try a different approach
+
+## Good habits
+
+- Use sessions for multi-step problems, new sessions for unrelated work
+- Export anything you want to keep before a major change
+- Give the session a title with `/title` so you can find it later
